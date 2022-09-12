@@ -7,20 +7,23 @@ public static class EasyGraphics
 
 	static List<ConsoleColor> cachedColors = new List<ConsoleColor>(){Console.ForegroundColor};
 	static int currentColorCacheIndex = 0;
-	static ConsoleColor currentColor = cachedColors[0];
-	public static ConsoleColor CurrentColor { get { return currentColor; } }
+	public static ConsoleColor CurrentColor { get { return cachedColors[currentColorCacheIndex]; } }
 	
 	static ConsoleColor internalCachedColor = Console.ForegroundColor;
 
 
-	public static void SetDefaultColor(ConsoleColor color) => cachedColors[0] = color;
-
+	// TODO: Fix so this can be set withing a colorflow nest
+	public static void SetDefaultColor(ConsoleColor color)
+	{
+		cachedColors[0] = color;
+		Console.ForegroundColor = CurrentColor;
+	}
+	
 	public static void ColorStart(ConsoleColor color)
 	{
 		cachedColors.Add(Console.ForegroundColor);
 		currentColorCacheIndex += 1;
 		
-		currentColor = color;
 		Console.ForegroundColor = color;
 	}
 	
@@ -29,7 +32,6 @@ public static class EasyGraphics
 		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
 		currentColorCacheIndex--;
 		
-		currentColor = cachedColors[currentColorCacheIndex];
 		cachedColors.RemoveAt(cachedColors.Count-1);
 	}
 	
@@ -70,19 +72,4 @@ public static class EasyGraphics
 		
 		return returnString;
 	}
-	
-	// Internal methods!
-	/*static void InternalColorStart(ConsoleColor color)
-	{
-		internalCachedColor = Console.ForegroundColor;
-		Console.ForegroundColor = color;
-	}
-	public static void InternalColorEnd() => Console.ForegroundColor = internalCachedColor;
-	
-	
-	public static bool IsCachedColor(ConsoleColor color)
-	{
-		return color == cachedColor;
-	}*/
-	
 }
