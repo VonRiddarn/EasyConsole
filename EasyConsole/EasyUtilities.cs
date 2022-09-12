@@ -57,9 +57,9 @@ public static class EasyUtilities
 			if(prompt.Length > 0)
 				Console.Write(prompt);
 				
-			EasyGraphics.ColorStart(inputColor);
+			EasyGraphics.ColorFlowStart(inputColor);
 			string input = Console.ReadLine();
-			EasyGraphics.ColorEnd();
+			EasyGraphics.ColorFlowEnd();
 			
 			if(int.TryParse(input, out int value))
 				return value;

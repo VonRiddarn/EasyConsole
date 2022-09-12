@@ -9,7 +9,7 @@ internal class Program
 		
 		Console.WriteLine("Default color text.");
 		
-		EasyGraphics.ColorStart(ConsoleColor.Cyan);
+		EasyGraphics.ColorFlowStart(ConsoleColor.Cyan);
 		Console.WriteLine("Colorflow colored text.");
 		
 		EasyGraphics.ColoredMessage(">Green text!", ConsoleColor.Green);
@@ -19,7 +19,7 @@ internal class Program
 		Console.WriteLine(s);
 		Console.WriteLine("Still colorflow text.");
 		
-		EasyGraphics.ColorEnd();
+		EasyGraphics.ColorFlowEnd();
 		
 		Console.WriteLine("Wellp, back to default, lets change it to green.");
 		EasyGraphics.SetDefaultColor(ConsoleColor.Green);

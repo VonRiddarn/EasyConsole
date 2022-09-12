@@ -19,7 +19,7 @@ public static class EasyGraphics
 		Console.ForegroundColor = CurrentColor;
 	}
 	
-	public static void ColorStart(ConsoleColor color)
+	public static void ColorFlowStart(ConsoleColor color)
 	{
 		cachedColors.Add(Console.ForegroundColor);
 		currentColorCacheIndex += 1;
@@ -27,7 +27,7 @@ public static class EasyGraphics
 		Console.ForegroundColor = color;
 	}
 	
-	public static void ColorEnd()
+	public static void ColorFlowEnd()
 	{
 		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
 		currentColorCacheIndex--;
@@ -39,14 +39,14 @@ public static class EasyGraphics
 	public static void ColoredMessage(string message, ConsoleColor color, bool useWriteLine = true)
 	{
 
-		ColorStart(color);
+		ColorFlowStart(color);
 
 		if (useWriteLine)
 			Console.WriteLine(message);
 		else
 			Console.Write(message);
 
-		ColorEnd();
+		ColorFlowEnd();
 	}
 	
 	
@@ -55,20 +55,20 @@ public static class EasyGraphics
 	public static void DrawLine(ConsoleColor color) => DrawLine(0, color);
 	public static void DrawLine(int lineOffset, ConsoleColor color)
 	{
-		ColorStart(color);
+		ColorFlowStart(color);
 		
 		Console.CursorTop += lineOffset;
 		Console.WriteLine(line);
 		Console.CursorTop -= lineOffset;
 		
-		ColorEnd();
+		ColorFlowEnd();
 	}
 	
 	public static string? ColoredInput(ConsoleColor color)
 	{
-		ColorStart(color);
+		ColorFlowStart(color);
 		string? returnString = Console.ReadLine();
-		ColorEnd();
+		ColorFlowEnd();
 		
 		return returnString;
 	}
