@@ -66,7 +66,7 @@ public static class EasyUtilities
 			else
 			{
 				if(error.Length > 0)
-					EasyGraphics.ColorMessage(error, errorColor);
+					EasyGraphics.ColoredMessage(error, errorColor);
 			}
 		}
 	}

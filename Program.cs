@@ -14,8 +14,19 @@ internal class Program
 		
 		EasyGraphics.DrawLine();
 		EasyGraphics.DrawLine(ConsoleColor.Blue);
+		Console.WriteLine("LOL THIS IS RED");
+		
+		EasyGraphics.ColorStart(ConsoleColor.Green);
+		
+		Console.WriteLine("AND THIS IS GREEN!");
 		
 		EasyGraphics.ColorEnd();
+		
+		Console.WriteLine("Man, I sure hope this is red...");
+		
+		EasyGraphics.ColorEnd();
+		
+		Console.WriteLine("And this is default!");
 		
 		EasyGraphics.DrawLine();
 	}

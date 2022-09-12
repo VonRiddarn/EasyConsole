@@ -5,68 +5,74 @@ public static class EasyGraphics
 	static string originalLine = "--------------------------------------------------";
 	static string line = originalLine;
 
-	static ConsoleColor cachedColor = Console.ForegroundColor;
-	static ConsoleColor currentColor = cachedColor;
+	static List<ConsoleColor> cachedColors = new List<ConsoleColor>(){Console.ForegroundColor};
+	static int currentColorCacheIndex = 0;
+	static ConsoleColor currentColor = cachedColors[0];
 	public static ConsoleColor CurrentColor { get { return currentColor; } }
 	
 	static ConsoleColor internalCachedColor = Console.ForegroundColor;
 
+
+	public static void SetDefaultColor(ConsoleColor color) => cachedColors[0] = color;
+
 	public static void ColorStart(ConsoleColor color)
 	{
-		cachedColor = Console.ForegroundColor;
-		Console.ForegroundColor = color;
+		cachedColors.Add(Console.ForegroundColor);
+		currentColorCacheIndex += 1;
 		
-		currentColor = Console.ForegroundColor;
+		currentColor = color;
+		Console.ForegroundColor = color;
 	}
 	
 	public static void ColorEnd()
 	{
-		Console.ForegroundColor = cachedColor;
-		internalCachedColor = cachedColor;
+		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
+		currentColorCacheIndex--;
 		
-		currentColor = Console.ForegroundColor;
+		currentColor = cachedColors[currentColorCacheIndex];
+		cachedColors.RemoveAt(cachedColors.Count-1);
 	}
 	
 	// TODO: Rename to ColoredMessage
-	public static void ColorMessage(string message, ConsoleColor color, bool useWriteLine = true)
+	public static void ColoredMessage(string message, ConsoleColor color, bool useWriteLine = true)
 	{
 
-		InternalColorStart(color);
+		ColorStart(color);
 
 		if (useWriteLine)
 			Console.WriteLine(message);
 		else
 			Console.Write(message);
 
-		InternalColorEnd();
+		ColorEnd();
 	}
 	
 	
-	public static void DrawLine() => DrawLine(0, currentColor);
-	public static void DrawLine(int lineOffset) => DrawLine(lineOffset, currentColor);
+	public static void DrawLine() => DrawLine(0, CurrentColor);
+	public static void DrawLine(int lineOffset) => DrawLine(lineOffset, CurrentColor);
 	public static void DrawLine(ConsoleColor color) => DrawLine(0, color);
 	public static void DrawLine(int lineOffset, ConsoleColor color)
 	{
-		InternalColorStart(color);
+		ColorStart(color);
 		
 		Console.CursorTop += lineOffset;
 		Console.WriteLine(line);
 		Console.CursorTop -= lineOffset;
 		
-		InternalColorEnd();
+		ColorEnd();
 	}
 	
 	public static string? ColoredInput(ConsoleColor color)
 	{
-		InternalColorStart(color);
+		ColorStart(color);
 		string? returnString = Console.ReadLine();
-		InternalColorEnd();
+		ColorEnd();
 		
 		return returnString;
 	}
 	
 	// Internal methods!
-	static void InternalColorStart(ConsoleColor color)
+	/*static void InternalColorStart(ConsoleColor color)
 	{
 		internalCachedColor = Console.ForegroundColor;
 		Console.ForegroundColor = color;
@@ -77,6 +83,6 @@ public static class EasyGraphics
 	public static bool IsCachedColor(ConsoleColor color)
 	{
 		return color == cachedColor;
-	}
+	}*/
 	
 }
