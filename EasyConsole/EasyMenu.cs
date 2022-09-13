@@ -1,33 +1,80 @@
+using VonRiddarn.EasyConsole.Graphics;
+
 namespace VonRiddarn.EasyConsole.Menu;
 
 public abstract class EasyMenu
 {
-	protected Button[] buttons;
-	
-	public void Start()
+	protected EasyButton[] buttons;
+
+	public int MaxSelectionIndex { get { return buttons.Length-1; } }
+
+	protected EasyMenu? parentMenu = null;
+	protected bool exitMenu = false;
+
+	protected ConsoleColor selectionColor = ConsoleColor.Green;
+	protected ConsoleColor cursorColor = ConsoleColor.Green;
+	protected string selectionCursor = "> ";
+
+	public void Start(EasyMenu parentMenu) => Start(selectionColor, cursorColor, parentMenu);
+	public void Start() => Start(selectionColor, cursorColor);
+	public void Start(ConsoleColor selectionColor) => Start(selectionColor, selectionColor);
+	public void Start(ConsoleColor selectionColor, ConsoleColor cursorColor, EasyMenu? parentMenu = null)
 	{
-		EasyGlobalInputManager.instance.InitializeNewMenu(buttons);
+		exitMenu = false;
 		
-		while(!EasyGlobalInputManager.instance.ConfirmSelection)
+		buttons = InitializeButtons();
+		
+		if (parentMenu != null)
+			this.parentMenu = parentMenu;
+
+		this.selectionColor = selectionColor;
+		this.cursorColor = cursorColor;
+
+		EasyGlobalInputManager.instance.InitializeNewMenu(MaxSelectionIndex);
+
+		while (!exitMenu)
 		{
-			DrawMenuUI();
-			EasyGlobalInputManager.instance.ReadInput();
+			Console.Clear();
+
+			DrawMenu();
+			if (EasyGlobalInputManager.instance.ReadInput())
+			{
+				ConfirmSelection(buttons[EasyGlobalInputManager.instance.SelectedIndex].ID);
+			}
 		}
 	}
 	
-	protected virtual void DrawMenuUI()
+	
+	public static void ForceStart(EasyMenu menu, ConsoleColor selectionColor, ConsoleColor cursorColor, EasyMenu? parentMenu = null)
 	{
-		// Here we draw the menu the way we want it.
-		// This is the method that will loop.
-		// Since it's directly related to the interface, this can be overridden.
-		// This ensures that the users of this framework can make custom UI's without a problem.
+		menu.Start(selectionColor, cursorColor, parentMenu);
 	}
 	
+	protected void ExitMenu()
+	{
+		if (parentMenu != null)
+			EasyGlobalInputManager.instance.InitializeNewMenu(parentMenu.MaxSelectionIndex);
+
+		exitMenu = true;
+	}
+
 	protected void DrawButtons()
 	{
-		// Here we draw the menu's buttons
-		// This will be used in the menu loop.
-		// It displays all the buttons of the menu by calling the "Draw()" method on each of them.
+		for (int i = 0; i < buttons.Length; i++)
+		{
+			if (buttons[i] == buttons[EasyGlobalInputManager.instance.SelectedIndex])
+				buttons[i].Draw(selectionCursor, cursorColor, selectionColor);
+			else
+				buttons[i].Draw();
+		}
 	}
 	
+	protected abstract EasyButton[] InitializeButtons();
+	// EXAMPLE: return new Button[] {new Button("ID_START", "Start Game")}
+	
+	protected abstract void DrawMenu();
+	// EXAMPLE: DrawButtons();
+
+	protected abstract void ConfirmSelection(string buttonID);
+	// EXAMPLE: EasyGraphics.ColoredMessage($"You pressed button with ID:{buttonID}!", ConsoleColor.Green);
 }

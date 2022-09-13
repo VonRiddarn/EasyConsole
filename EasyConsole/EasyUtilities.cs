@@ -70,6 +70,7 @@ public static class EasyUtilities
 				if(error.Length > 0)
 				{
 					EasyGraphics.ColoredMessage(error, errorColor);
+					Console.SetCursorPosition(0, Console.CursorTop-2);
 				}
 			}
 		}

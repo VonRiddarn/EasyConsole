@@ -1,3 +1,5 @@
+using VonRiddarn.EasyConsole.Graphics;
+
 namespace VonRiddarn.EasyConsole.Menu;
 
 public class EasyGlobalInputManager
@@ -6,10 +8,10 @@ public class EasyGlobalInputManager
 	public static EasyGlobalInputManager? instance = null;
 	
 	int selectedIndex = 0;
-	int maxIndex = 0;
+	public int SelectedIndex { get { return selectedIndex; } }
+	int maxSelectionIndex = 0;
 	
 	bool confirmSelection = false;
-	public bool ConfirmSelection {get { return confirmSelection; } }
 	
 	// Chache the input key to save memory
 	ConsoleKey currentInput = ConsoleKey.NoName;
@@ -19,10 +21,7 @@ public class EasyGlobalInputManager
 	{
 		if(instance != null)
 		{
-			ConsoleColor color = Console.ForegroundColor;
-			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.WriteLine("Warning: A singleton of GlobalInputManager already exists.");
-			Console.ForegroundColor = color;
+			EasyGraphics.ColoredMessage("Warning: A singleton of GlobalInputManager already exists.", ConsoleColor.Red);
 			return;
 		}
 		
@@ -30,14 +29,37 @@ public class EasyGlobalInputManager
 		this.confirmKey = confirmKey;
 	}
 	
-	public void ReadInput()
+	public bool ReadInput()
 	{
 		currentInput = Console.ReadKey().Key;
-		ProcessInput();
+		return ProcessInput();
 	}
 	
-	void ProcessInput()
+	bool ProcessInput()
 	{
+		if(currentInput == confirmKey)
+		{
+			currentInput = ConsoleKey.NoName;
+			return true;
+		}
+		
+		if(currentInput == ConsoleKey.UpArrow)
+		{
+			if(selectedIndex - 1 >= 0)
+				selectedIndex--;
+			else
+				selectedIndex = maxSelectionIndex;
+		}
+		else if(currentInput == ConsoleKey.DownArrow)
+		{
+			if(selectedIndex + 1 <= maxSelectionIndex)
+				selectedIndex++;
+			else
+				selectedIndex = 0;
+		}
+		
+		currentInput = ConsoleKey.NoName;
+		return false;
 		// Arrow keys = move the selected index
 		// Enter = Confirm
 		// We may want to store a reference to the buttons of the currently initialized menu
@@ -47,24 +69,10 @@ public class EasyGlobalInputManager
 		// And when we confirm we run a confirm command on that menu sending through the index of the button we pressed.
 	}
 	
-	public void InitializeNewMenu(Button[] buttons)
+	public void InitializeNewMenu(int maxSelectionIndex)
 	{
 		selectedIndex = 0;
-		maxIndex = 0;
+		this.maxSelectionIndex = maxSelectionIndex;
 		confirmSelection = false;
-		
-		for(int i = 0; i < buttons.Length; i++)
-		{
-			RegisterButton(buttons[i].Index);
-		}
 	}
-	
-	// TODO: Maybe add the possibility to send a method in the parameter
-	// so that we can call the methods straight from the InputSystem instead of locally?
-	void RegisterButton(int localIndex)
-	{
-		if(localIndex > maxIndex)
-			maxIndex = localIndex;
-	}
-	
 }
