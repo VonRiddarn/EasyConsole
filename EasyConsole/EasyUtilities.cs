@@ -57,7 +57,7 @@ public static class EasyUtilities
 			if(prompt.Length > 0)
 				Console.Write(prompt);
 				
-			EasyGraphics.ColorFlowStart(inputColor);
+			EasyGraphics.ColorFlowBegin(inputColor);
 			string input = Console.ReadLine();
 			EasyGraphics.ColorFlowEnd();
 			
@@ -65,8 +65,12 @@ public static class EasyUtilities
 				return value;
 			else
 			{
+				// TODO: Make sure that we don't send error messages down.
+				// We want to move the cursor up and remove the line to rewrite the message.
 				if(error.Length > 0)
+				{
 					EasyGraphics.ColoredMessage(error, errorColor);
+				}
 			}
 		}
 	}
