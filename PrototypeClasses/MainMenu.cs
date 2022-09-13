@@ -5,7 +5,7 @@ using VonRiddarn.EasyConsole.Utilities;
 namespace VonRiddarn.EasyConsole.Prototyping;
 public class MainMenu : EasyMenu
 {
-	SubMenu settingsMenu = new SubMenu();
+	SubMenu settingsMenu = new SubMenu("--> ");
 	
 	protected override void ConfirmSelection(string buttonID)
 	{

@@ -14,11 +14,14 @@ public abstract class EasyMenu
 	protected ConsoleColor selectionColor = ConsoleColor.Green;
 	protected ConsoleColor cursorColor = ConsoleColor.Green;
 	protected string selectionCursor = "> ";
-
-	public void Start(EasyMenu parentMenu) => Start(selectionColor, cursorColor, parentMenu);
-	public void Start() => Start(selectionColor, cursorColor);
-	public void Start(ConsoleColor selectionColor) => Start(selectionColor, selectionColor);
-	public void Start(ConsoleColor selectionColor, ConsoleColor cursorColor, EasyMenu? parentMenu = null)
+	
+	
+	public void Start(EasyMenu parentMenu) => Start(selectionColor, cursorColor, selectionCursor, parentMenu);
+	public void Start() => Start(selectionColor, cursorColor, selectionCursor);
+	public void Start(string selectionCursor) => Start(selectionColor, cursorColor, selectionCursor);
+	public void Start(ConsoleColor selectionColor) => Start(selectionColor, selectionColor, selectionCursor);
+	public void Start(ConsoleColor selectionColor, string selectionCursor) => Start(selectionColor, selectionColor, selectionCursor);
+	public void Start(ConsoleColor selectionColor, ConsoleColor cursorColor, string selectionCursor, EasyMenu? parentMenu = null)
 	{
 		exitMenu = false;
 		
@@ -44,10 +47,12 @@ public abstract class EasyMenu
 		}
 	}
 	
-	
-	public static void ForceStart(EasyMenu menu, ConsoleColor selectionColor, ConsoleColor cursorColor, EasyMenu? parentMenu = null)
+	// TODO: Make sure to "unhack" this method.
+	// We might want to be able to pass just the EasyMenu, and then have a property or something that sets everything else.
+	// That way all we need to make sure is that we are passing a valid instance - which would be imposible not to do.
+	public static void ForceStart(EasyMenu menu, ConsoleColor selectionColor, ConsoleColor cursorColor, string selectionCursor, EasyMenu? parentMenu = null)
 	{
-		menu.Start(selectionColor, cursorColor, parentMenu);
+		menu.Start(selectionColor, cursorColor, selectionCursor, parentMenu);
 	}
 	
 	protected void ExitMenu()

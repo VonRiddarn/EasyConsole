@@ -6,14 +6,19 @@ public class SubMenu : EasyMenu
 {
 
 	SubSubMenu subSubMenu = new SubSubMenu();
-
+	
+	public SubMenu(string cursor)
+	{
+		selectionCursor = cursor;
+	}
+	
 	protected override void ConfirmSelection(string buttonID)
 	{
 		if (buttonID == "ID_A")
 			subSubMenu.Start(this);
 			
 		if (buttonID == "ID_B")
-			EasyMenu.ForceStart(parentMenu, selectionColor, cursorColor);
+			EasyMenu.ForceStart(parentMenu, selectionColor, cursorColor, selectionCursor);
 			
 		else if (buttonID == "ID_C")
 			ExitMenu();

@@ -17,5 +17,9 @@ internal class Program
 		
 		// Start the menu.
 		mainMenu.Start();
+		
+		
+		// TODO: Add comments.... like.... for real.
+		
 	}
 }
