@@ -17,8 +17,9 @@ When this notice is removed from the readme file, the library has reached a stab
 
 ## What you can achieve
 Something like this: https://i.imgur.com/gBkx6uf.png<br/>
-Or this: https://i.imgur.com/rHAqO2H.png
-
+Or this: https://i.imgur.com/rHAqO2H.png<br/>
+This is the most recent screenshot: https://i.imgur.com/tEJWfaI.png<br/>
+<br/>
 Note: These screenshots are old and do not fully represent the state of the library.
 For the best understanding look through the source.
 The source is sadly uncommented as of now, but that will be fixed later this week.<br/>
