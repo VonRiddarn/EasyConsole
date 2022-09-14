@@ -9,7 +9,7 @@ internal class Program
 	{
 		// TODO: Add comments to the project.... like.... for real.
 		
-		EasyGraphics.DrawHeader("Program");
+		EasyGraphics.DrawHeader("Program", ConsoleColor.Magenta);
 		EasyGraphics.ColoredMessage("Wow, look at that header!", ConsoleColor.Cyan);
 		EasyGraphics.ColorFlowBegin(ConsoleColor.Yellow);
 		Console.WriteLine("This is inside a color flow!");
@@ -19,6 +19,7 @@ internal class Program
 		EasyGraphics.DrawLine();
 		EasyGraphics.ColoredMessage("And override the colors with colored messages!", ConsoleColor.Green);
 		EasyGraphics.ColorFlowEnd(); // End flow 2 -> Red
+		Console.WriteLine("This is still in the yellow colorflow though!");
 		EasyGraphics.ColorFlowEnd(); // End flow 1 -> Yellow
 		Console.WriteLine("Back to default colors ):");
 		EasyGraphics.SetDefaultColor(ConsoleColor.Cyan);
