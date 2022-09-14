@@ -19,8 +19,9 @@ public abstract class EasyMenu
 	public void Start(EasyMenu parentMenu) => Start(selectionColor, cursorColor, selectionCursor, parentMenu);
 	public void Start() => Start(selectionColor, cursorColor, selectionCursor);
 	public void Start(string selectionCursor) => Start(selectionColor, cursorColor, selectionCursor);
+	public void Start(string selectionCursor, ConsoleColor selectionColor) => Start(selectionColor, selectionColor, selectionCursor);
 	public void Start(ConsoleColor selectionColor) => Start(selectionColor, selectionColor, selectionCursor);
-	public void Start(ConsoleColor selectionColor, string selectionCursor) => Start(selectionColor, selectionColor, selectionCursor);
+	public void Start(ConsoleColor selectionColor, ConsoleColor cursorColor) => Start(selectionColor, cursorColor, selectionCursor);
 	public void Start(ConsoleColor selectionColor, ConsoleColor cursorColor, string selectionCursor, EasyMenu? parentMenu = null)
 	{
 		exitMenu = false;
