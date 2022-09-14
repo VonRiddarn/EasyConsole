@@ -34,16 +34,15 @@ public static class EasyGraphics
 	#region COLORFLOW - ColorFlowBegin, ColorFlowEnd
 	public static void ColorFlowBegin(ConsoleColor color)
 	{
+		Console.ForegroundColor = color;
 		cachedColors.Add(Console.ForegroundColor);
 		currentColorCacheIndex += 1;
-
-		Console.ForegroundColor = color;
 	}
 
 	public static void ColorFlowEnd()
 	{
-		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
 		currentColorCacheIndex--;
+		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
 
 		cachedColors.RemoveAt(cachedColors.Count - 1);
 	}
