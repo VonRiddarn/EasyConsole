@@ -6,7 +6,8 @@ namespace VonRiddarn.EasyConsole.Examples;
 public class MainMenu : EasyMenu
 {
 	SubMenu subMenuInstance = new SubMenu();
-
+	
+	// This method is called from the base class to make it easier to implement buttons.
 	protected override EasyButton[] InitializeButtons()
 	{
 		return new EasyButton[]
@@ -20,9 +21,11 @@ public class MainMenu : EasyMenu
 		};
 	}
 
-	// Needed implementation because abstract.
+	// Needed implementation because it's abstract
+	// Called after initialization but before the first itteration of the lifespan loop.
 	protected override void OnStart() { }
-
+	
+	// Called each itteration of the lifespan loop.
 	protected override void DrawMenu()
 	{
 		EasyGraphics.DrawHeader("Main Menu");
@@ -31,7 +34,9 @@ public class MainMenu : EasyMenu
 
 		EasyGraphics.DrawLine();
 	}
-
+	
+	// Called whenever the input system detects a button press.
+	// Sends the ID of the button pressed as a parameter.
 	protected override void ConfirmSelection(string buttonID)
 	{
 		if (buttonID == "BUTTON_ADD")
@@ -64,7 +69,7 @@ public class MainMenu : EasyMenu
 		}
 		else if (buttonID == "BUTTON_SUBMENU")
 		{
-			// Since we are starting this menu from inside this menus lifespan loop
+			// Since we are starting a menu from inside this menus lifespan loop
 			// We MUST set ourselves as the submenus parent menu.
 
 			subMenuInstance.Start(this);
