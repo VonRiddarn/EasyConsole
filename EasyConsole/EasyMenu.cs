@@ -70,16 +70,8 @@ public abstract class EasyMenu
 				ConfirmSelection(buttons[EasyGlobalInputManager.instance.SelectedIndex].ID);
 		}
 	}
-
-	// TODO: Decouple the menu switch system from any internal loops of the program and run them in the Application or Main loop.
-	// This method is a little iffy atm..
-	// Check comment at the top (by the IDs) for more info.
-	// The reason we can't have a parent menu is because the parent menu MUST be the menu that calls the .Start() method.
-	///<summary>Force start a menu using an instance.</summary>
-	///<remarks>This method could lead to infinite callstacks if used carelessly, therefore it is not recommended for use at this time.</remarks>
-	public static void ForceStart(EasyMenu menu) => menu.Start();
-
-
+	
+	
 	///<summary>Exit the menu</summary>
 	///<remarks>If a parent menu exists, this method will initialize that menus index to the global input system 
 	///before existing its lifespan loop.</remarks>
