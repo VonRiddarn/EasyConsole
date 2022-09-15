@@ -7,6 +7,9 @@ internal class Program
 {
 	public static void Main(string[] args)
 	{
+		// Get rid of that pesky white box.
+		Console.CursorVisible = false;
+		
 		// Below this point we are testing the menu system, and it is NICE.
 		// We need an instance of this running as we are using a singleton pattern.
 		EasyGlobalInputManager inputManager = new EasyGlobalInputManager();
