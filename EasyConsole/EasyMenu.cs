@@ -19,6 +19,7 @@ public abstract class EasyMenu
 	// index 0 = prefixCursor | inxex 1 = suffixCursor
 	// That way we can make 2 arrows pointing at the element like so:
 	// > button <
+	
 	// Static
 	static string defaultSelectionCursor = "> ";
 	public static string DefaultSelectionCursor { get { return defaultSelectionCursor; } }
@@ -65,6 +66,17 @@ public abstract class EasyMenu
 		// Lifespan loop
 		while (keepAlive)
 		{
+			// TODO: Initialize the menu here insted.
+			// On the InitializeNewMenu call, check if the parameters do NOT match with the index.
+			// Also, check if the currentmenu in the input system is = to this menu.
+			// If yes, keep button index
+			// If no : Reset button index and set the current menu to this
+			// That means we don't need to pass a parent when we initialize a menu, and we can jump between any menus.
+			// To make sure we aren't creating infinite callstacks we could simply keep all menus in a list
+			// If we go to a menu that already exists in the list, force quit all the menus all the way back to that list ? 
+			
+			// We still need to initialize the buttons above the OnStart.
+			
 			if (clearOnDrawMenu)
 				Console.Clear();
 
