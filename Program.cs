@@ -22,7 +22,8 @@ internal class Program
 		
 		// Start the lifespan loop of the menu.
 		// No parent menu needed as the menu wont exit into another menus lifespan loop.
-		//mainMenu.Start();
+		mainMenu.Start();
+		
 		// We continue here when the menu has called ExitMenu
 		
 		EasyGraphics.ColoredMessage("So long, and thanks for all the fish!", ConsoleColor.Green);
