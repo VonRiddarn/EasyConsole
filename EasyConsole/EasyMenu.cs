@@ -15,6 +15,10 @@ public abstract class EasyMenu
 	// And have the user add their menu in the start method.
 	// In the AddToGlobalMenuList we just need to make sure that the menu we are trying to add isn't already in the list.
 	
+	// TODO: Make the cursor a set array of 2 strings.
+	// index 0 = prefixCursor | inxex 1 = suffixCursor
+	// That way we can make 2 arrows pointing at the element like so:
+	// > button <
 	// Static
 	static string defaultSelectionCursor = "> ";
 	public static string DefaultSelectionCursor { get { return defaultSelectionCursor; } }
@@ -121,7 +125,10 @@ public abstract class EasyMenu
 	#endregion
 
 	#region Public setters
-
+	
+	
+	// TODO: change this so that we are using a string array instead for suffix and prefix.
+	// Both must be set when the method is called, but string.empty is a valid input.
 	///<summary>Sets the cursor for this menu instance.</summary>
 	public void SetSelectionCursor(string selectionCursor) => this.selectionCursor = selectionCursor;
 	///<summary>Sets the cursor color for this menu instance.</summary>
