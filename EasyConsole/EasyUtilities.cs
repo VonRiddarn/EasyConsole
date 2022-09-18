@@ -32,15 +32,15 @@ public static class EasyUtilities
 
 	public static void ClearLine(int heightOffset = 0, bool rubberBand = false)
 	{
-		//Console.SetCursorPosition(0, Console.CursorTop - 2);
-
+		// Move the cursor to a line
 		Console.CursorTop += heightOffset;
 
 		// Reset cursor to the left
 		// Build a string of spaces with the length Console.WindowWidth
 		// Reset the cursor to the left
 		Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-
+		
+		// If true: Send the cursor back to its start position after clearing.
 		if (rubberBand)
 			Console.CursorTop -= heightOffset;
 	}
@@ -61,10 +61,9 @@ public static class EasyUtilities
 
 		while (true)
 		{
-
+			
 			if (prompt.Length > 0)
 				Console.Write(prompt);
-
 
 			EasyGraphics.ColorFlowBegin(inputColor);
 			string? input = Console.ReadLine();
@@ -74,6 +73,7 @@ public static class EasyUtilities
 			{
 				// ! at the end is a compiler null forgiveable operator
 				T returnValue = (T)Convert.ChangeType(input, typeof(T))!;
+				
 				if (containsErrorMessage)
 					EasyUtilities.ClearLine();
 
