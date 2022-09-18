@@ -14,16 +14,21 @@ public abstract class EasyMenu
 	// Also, now that we have OnStart() we could implement EasyMenuManager.AddToGlobalMenuList(EasyMenu menu)
 	// And have the user add their menu in the start method.
 	// In the AddToGlobalMenuList we just need to make sure that the menu we are trying to add isn't already in the list.
-	
+
 	// TODO: Make the cursor a set array of 2 strings.
 	// index 0 = prefixCursor | inxex 1 = suffixCursor
 	// That way we can make 2 arrows pointing at the element like so:
 	// > button <
-	
+
+	// Since we are using the singleton pattern, we know the instance of EasyGlobalInput should not be null
+	// Therefore we are applying the null forgiving operator to it so we don't get loads of nullable errors from the compiler.
+	// EG: EasyGlobalInputManager.instance!.InitializeNewMenu(MaxSelectionIndex); Notice the !
+	// A "problem" with this would be if the instance IS null. Because then there would be hell to pay.
+
 	// Static
-	static string defaultSelectionCursor = "> ";
-	public static string DefaultSelectionCursor { get { return defaultSelectionCursor; } }
-	
+	static string[] defaultSelectionCursor = new string[2] { "> ", string.Empty };
+	public static string[] DefaultSelectionCursor { get { return new string[] { defaultSelectionCursor[0], defaultSelectionCursor[1] }; } }
+
 	// Instance
 	protected string id = string.Empty;
 	public string ID { get { return id; } }
@@ -33,7 +38,7 @@ public abstract class EasyMenu
 
 	protected EasyMenu? parentMenu = null;
 
-	protected EasyButton[] buttons;
+	protected EasyButton[] buttons = new EasyButton[0];
 	public int MaxSelectionIndex { get { return buttons.Length - 1; } }
 
 	protected ConsoleColor selectionTextColor = ConsoleColor.Green;
@@ -42,8 +47,8 @@ public abstract class EasyMenu
 	protected ConsoleColor selectionCursorColor = ConsoleColor.Green;
 	public ConsoleColor SelectionCursorColor { get { return selectionCursorColor; } }
 
-	protected string selectionCursor = DefaultSelectionCursor;
-	public string SelectionCursor { get { return selectionCursor; } }
+	protected string[] selectionCursor = DefaultSelectionCursor;
+	public string[] SelectionCursor { get { return new string[] { selectionCursor[0], selectionCursor[1] }; } }
 
 	///<summary>Starts the lifespan loop of the menu instance.</summary>
 	///<remarks>Parent menu is only to be used when calling a new menu INSIDE another menu's LIFESPAN LOOP.<br/>
@@ -55,7 +60,7 @@ public abstract class EasyMenu
 
 		buttons = InitializeButtons();
 
-		EasyGlobalInputManager.instance.InitializeNewMenu(MaxSelectionIndex);
+		EasyGlobalInputManager.instance!.InitializeNewMenu(MaxSelectionIndex);
 
 		if (parentMenu != null)
 			this.parentMenu = parentMenu;
@@ -74,9 +79,9 @@ public abstract class EasyMenu
 			// That means we don't need to pass a parent when we initialize a menu, and we can jump between any menus.
 			// To make sure we aren't creating infinite callstacks we could simply keep all menus in a list
 			// If we go to a menu that already exists in the list, force quit all the menus all the way back to that list ? 
-			
+
 			// We still need to initialize the buttons above the OnStart.
-			
+
 			if (clearOnDrawMenu)
 				Console.Clear();
 
@@ -86,15 +91,15 @@ public abstract class EasyMenu
 				ConfirmSelection(buttons[EasyGlobalInputManager.instance.SelectedIndex].ID);
 		}
 	}
-	
-	
+
+
 	///<summary>Exit the menu</summary>
 	///<remarks>If a parent menu exists, this method will initialize that menus index to the global input system 
 	///before existing its lifespan loop.</remarks>
 	protected void ExitMenu()
 	{
 		if (parentMenu != null)
-			EasyGlobalInputManager.instance.InitializeNewMenu(parentMenu.MaxSelectionIndex);
+			EasyGlobalInputManager.instance!.InitializeNewMenu(parentMenu.MaxSelectionIndex);
 
 		keepAlive = false;
 	}
@@ -105,7 +110,7 @@ public abstract class EasyMenu
 	{
 		for (int i = 0; i < buttons.Length; i++)
 		{
-			if (buttons[i] == buttons[EasyGlobalInputManager.instance.SelectedIndex])
+			if (buttons[i] == buttons[EasyGlobalInputManager.instance!.SelectedIndex])
 				buttons[i].Draw(selectionCursor, selectionCursorColor, selectionTextColor);
 			else
 				buttons[i].Draw();
@@ -137,12 +142,17 @@ public abstract class EasyMenu
 	#endregion
 
 	#region Public setters
-	
-	
-	// TODO: change this so that we are using a string array instead for suffix and prefix.
+
+
+	// TODO: change this so that we are using a string array instead for suffix and prefix. -> This is being worked on.
 	// Both must be set when the method is called, but string.empty is a valid input.
+
 	///<summary>Sets the cursor for this menu instance.</summary>
-	public void SetSelectionCursor(string selectionCursor) => this.selectionCursor = selectionCursor;
+	public void SetSelectionCursor(string selectionCursorPrefix, string selectionCursorSuffix)
+	{
+		selectionCursor[0] = selectionCursorPrefix;
+		selectionCursor[1] = selectionCursorSuffix;
+	}
 	///<summary>Sets the cursor color for this menu instance.</summary>
 	/// <remarks>Allows you to also override the selection text color.</remarks>
 	public void SetSelectionCursor(ConsoleColor selectionCursorColor, bool overrideSelectionColor)
@@ -154,7 +164,7 @@ public abstract class EasyMenu
 	}
 	///<summary>Sets the cursor and its color for this menu instance.</summary>
 	///<remarks>Allows you to also override the selection text color.</remarks>
-	public void SetSelectionCursor(string selectionCursor, ConsoleColor selectionCursorColor, bool overrideSelectionTextColor)
+	public void SetSelectionCursor(string[] selectionCursor, ConsoleColor selectionCursorColor, bool overrideSelectionTextColor)
 	{
 		this.selectionCursor = selectionCursor;
 		this.selectionCursorColor = selectionCursorColor;
@@ -182,7 +192,7 @@ public abstract class EasyMenu
 
 	#region Public static setters
 
-	public static void SetDefaultCursor(string newCursor) => defaultSelectionCursor = newCursor;
+	public static void SetDefaultCursor(string[] newCursor) => defaultSelectionCursor = newCursor;
 
 	#endregion
 

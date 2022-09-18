@@ -24,7 +24,7 @@ public class SubMenu : EasyMenu
 		// Such as: Selection curspr, cursor color and button text color
 		// The default cursor is "> " and can be accessed with the EasyMenu.DefaultSelectionCursor property.
 		// The default cursor can be changed with EasyMeny.SetDefaultSelectionCursor(newCursor)
-		SetSelectionCursor(">> ");
+		SetSelectionCursor(">> ", " <-><<");
 	}
 
 	protected override void DrawMenu()

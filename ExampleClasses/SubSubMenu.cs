@@ -19,7 +19,8 @@ public class SubSubMenu : EasyMenu
 	{
 		// We can change the cursor if we want to.
 		// Look at "SubMenu.cs" OnStart for a better explanation. 
-		SetSelectionCursor(">>> ", ConsoleColor.Cyan, true);
+		string[] cursor = new string[]{">>> ", " <<<"};
+		SetSelectionCursor(cursor, ConsoleColor.Cyan, true);
 	}
 
 	protected override void DrawMenu()

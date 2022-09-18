@@ -28,10 +28,11 @@ public class EasyButton
 	public void Draw() => Console.WriteLine(text);
 	
 	///<summary>Draw a button that is selected.</summary>
-	public void Draw(string cursor, ConsoleColor cursorColor, ConsoleColor selectionColor)
+	public void Draw(string[] selectionCursor, ConsoleColor cursorColor, ConsoleColor selectionColor)
 	{
-		EasyGraphics.ColoredMessage(cursor, cursorColor, false);
-		EasyGraphics.ColoredMessage($"{text}\n", selectionColor, false);
+		EasyGraphics.ColoredMessage(selectionCursor[0], cursorColor, false);
+		EasyGraphics.ColoredMessage($"{text}", selectionColor, false);
+		EasyGraphics.ColoredMessage(selectionCursor[1], cursorColor, true);
 	}
 	
 }

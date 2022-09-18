@@ -67,16 +67,17 @@ public static class EasyUtilities
 
 
 			EasyGraphics.ColorFlowBegin(inputColor);
-			string input = Console.ReadLine();
+			string? input = Console.ReadLine();
 			EasyGraphics.ColorFlowEnd();
 
 			try
 			{
-				object returnValue = (T)Convert.ChangeType(input, typeof(T));
+				// ! at the end is a compiler null forgiveable operator
+				T returnValue = (T)Convert.ChangeType(input, typeof(T))!;
 				if (containsErrorMessage)
 					EasyUtilities.ClearLine();
 
-				return (T)returnValue;
+				return returnValue;
 			}
 			catch
 			{
