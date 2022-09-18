@@ -30,21 +30,6 @@ public static class EasyUtilities
 		}
 	}
 
-	public static int ForceInputInt()
-	{
-		// No message
-		// No error
-		// Default color
-		return ForceInputInt(string.Empty, string.Empty, EasyGraphics.CurrentColor);
-	}
-	public static int ForceInputInt(string prompt)
-	{
-		// Custom message
-		// No error
-		// Default color
-		return ForceInputInt(prompt, string.Empty, EasyGraphics.CurrentColor);
-	}
-
 	public static void ClearLine(int heightOffset = 0, bool rubberBand = false)
 	{
 		//Console.SetCursorPosition(0, Console.CursorTop - 2);
@@ -66,11 +51,11 @@ public static class EasyUtilities
 	///<summary>This will lock the end-user in an input loop that they cannot escape unless they give a valid input of type T</summary>
 	///<remarks>The value is then returned as an object, meaning you need to case the return to the type you want it to be.
 	///Like so: int i = (ForceInputOfType-int-("text", "text"));</remarks>
-	public static object ForceInputOfType<T>(string prompt, string error) => ForceInputOfType<T>(prompt, error, EasyGraphics.CurrentColor);
+	public static T ForceInputOfType<T>(string prompt, string error) => ForceInputOfType<T>(prompt, error, EasyGraphics.CurrentColor);
 	///<summary>This will lock the end-user in an input loop that they cannot escape unless they give a valid input of type T</summary>
 	///<remarks>The value is then returned as an object, meaning you need to case the return to the type you want it to be.
 	///Like so: int i = (ForceInputOfType-int-("text", "text"));</remarks>
-	public static object ForceInputOfType<T>(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
+	public static T ForceInputOfType<T>(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
 	{
 		bool containsErrorMessage = false;
 
@@ -91,7 +76,7 @@ public static class EasyUtilities
 				if (containsErrorMessage)
 					EasyUtilities.ClearLine();
 
-				return returnValue;
+				return (T)returnValue;
 			}
 			catch
 			{

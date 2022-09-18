@@ -15,9 +15,9 @@ internal class Program
 		EasyGlobalInputManager inputManager = new EasyGlobalInputManager();
 		
 		// Test the forced input:
-		int i = (int)EasyUtilities.ForceInputOfType<int>("Enter int: ", "Must be an int!");
-		float fl = (float)EasyUtilities.ForceInputOfType<float>("Enter float: ", "Must be an float!");
-		double db = (double)EasyUtilities.ForceInputOfType<double>("Enter double: ", "Must be an double!");
+		int i = EasyUtilities.ForceInputOfType<int>("Enter int: ", "Must be an int!");
+		float fl = EasyUtilities.ForceInputOfType<float>("Enter float: ", "Must be an float!");
+		double db = EasyUtilities.ForceInputOfType<double>("Enter double: ", "Must be an double!");
 		
 		Console.WriteLine(i);
 		Console.WriteLine(fl);
