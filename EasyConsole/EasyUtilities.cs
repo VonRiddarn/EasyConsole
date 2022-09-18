@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using VonRiddarn.EasyConsole.Graphics;
 
 namespace VonRiddarn.EasyConsole.Utilities;
@@ -62,153 +63,45 @@ public static class EasyUtilities
 	// TODO: Add ClearLine that clears the lines from a start to end.
 
 
-	// TODO: Anything that isn't this.
-	// Fix this hacky mess...
-	#region  Forced Inputs - aka Unholy hacky stuff meant to stay hidden from mere mortals
-	public static int ForceInputInt(string prompt, string error) => ForceInputInt(prompt, error, EasyGraphics.CurrentColor);
-	public static int ForceInputInt(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
+	///<summary>This will lock the end-user in an input loop that they cannot escape unless they give a valid input of type T</summary>
+	///<remarks>The value is then returned as an object, meaning you need to case the return to the type you want it to be.
+	///Like so: int i = (ForceInputOfType-int-("text", "text"));</remarks>
+	public static object ForceInputOfType<T>(string prompt, string error) => ForceInputOfType<T>(prompt, error, EasyGraphics.CurrentColor);
+	///<summary>This will lock the end-user in an input loop that they cannot escape unless they give a valid input of type T</summary>
+	///<remarks>The value is then returned as an object, meaning you need to case the return to the type you want it to be.
+	///Like so: int i = (ForceInputOfType-int-("text", "text"));</remarks>
+	public static object ForceInputOfType<T>(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
 	{
 		bool containsErrorMessage = false;
 
 		while (true)
 		{
+
 			if (prompt.Length > 0)
 				Console.Write(prompt);
+
 
 			EasyGraphics.ColorFlowBegin(inputColor);
 			string input = Console.ReadLine();
 			EasyGraphics.ColorFlowEnd();
 
-			if (int.TryParse(input, out int value))
+			try
 			{
+				object returnValue = (T)Convert.ChangeType(input, typeof(T));
 				if (containsErrorMessage)
 					EasyUtilities.ClearLine();
 
-				return value;
+				return returnValue;
 			}
-			else
+			catch
 			{
-				// TODO: Make sure that we don't send error messages down.
-				// We want to move the cursor up and remove the line to rewrite the message.
 				if (error.Length > 0)
 				{
 					EasyGraphics.ColoredMessage(error, errorColor);
 					containsErrorMessage = true;
-					//Console.SetCursorPosition(0, Console.CursorTop - 2);
 					EasyUtilities.ClearLine(-2, false);
 				}
 			}
 		}
 	}
-
-	public static float ForceInputFloat(string prompt, string error) => ForceInputFloat(prompt, error, EasyGraphics.CurrentColor);
-	public static float ForceInputFloat(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
-	{
-		bool containsErrorMessage = false;
-
-		while (true)
-		{
-			if (prompt.Length > 0)
-				Console.Write(prompt);
-
-			EasyGraphics.ColorFlowBegin(inputColor);
-			string input = Console.ReadLine();
-			EasyGraphics.ColorFlowEnd();
-
-			if (float.TryParse(input, out float value))
-			{
-				if (containsErrorMessage)
-					EasyUtilities.ClearLine();
-
-				return value;
-			}
-			else
-			{
-				// TODO: Make sure that we don't send error messages down.
-				// We want to move the cursor up and remove the line to rewrite the message.
-				if (error.Length > 0)
-				{
-					containsErrorMessage = true;
-					EasyGraphics.ColoredMessage(error, errorColor);
-					//Console.SetCursorPosition(0, Console.CursorTop - 2);
-					EasyUtilities.ClearLine(-2, false);
-				}
-			}
-		}
-	}
-
-	public static double ForceInputDouble(string prompt, string error) => ForceInputDouble(prompt, error, EasyGraphics.CurrentColor);
-	public static double ForceInputDouble(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
-	{
-		bool containsErrorMessage = false;
-
-		while (true)
-		{
-			if (prompt.Length > 0)
-				Console.Write(prompt);
-
-			EasyGraphics.ColorFlowBegin(inputColor);
-			string input = Console.ReadLine();
-			EasyGraphics.ColorFlowEnd();
-
-			if (double.TryParse(input, out double value))
-			{
-				if (containsErrorMessage)
-					EasyUtilities.ClearLine();
-
-				return value;
-			}
-			else
-			{
-				// TODO: Make sure that we don't send error messages down.
-				// We want to move the cursor up and remove the line to rewrite the message.
-				if (error.Length > 0)
-				{
-					containsErrorMessage = true;
-					EasyGraphics.ColoredMessage(error, errorColor);
-					//Console.SetCursorPosition(0, Console.CursorTop - 2);
-					EasyUtilities.ClearLine(-2, false);
-				}
-			}
-		}
-	}
-
-	public static char ForceInputChar(string prompt, string error) => ForceInputChar(prompt, error, EasyGraphics.CurrentColor);
-	public static char ForceInputChar(string prompt, string error, ConsoleColor inputColor, ConsoleColor errorColor = ConsoleColor.Red)
-	{
-		bool containsErrorMessage = false;
-
-		while (true)
-		{
-			if (prompt.Length > 0)
-				Console.Write(prompt);
-
-			EasyGraphics.ColorFlowBegin(inputColor);
-			string input = Console.ReadLine();
-			EasyGraphics.ColorFlowEnd();
-
-			if (char.TryParse(input, out char value))
-			{
-				if (containsErrorMessage)
-					EasyUtilities.ClearLine();
-
-				return value;
-			}
-			else
-			{
-				// TODO: Make sure that we don't send error messages down.
-				// We want to move the cursor up and remove the line to rewrite the message.
-				if (error.Length > 0)
-				{
-					containsErrorMessage = true;
-					EasyGraphics.ColoredMessage(error, errorColor);
-					//Console.SetCursorPosition(0, Console.CursorTop - 2);
-					EasyUtilities.ClearLine(-2, false);
-				}
-			}
-		}
-	}
-
-	#endregion
-
 }

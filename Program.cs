@@ -14,6 +14,18 @@ internal class Program
 		// We need an instance of this running as we are using a singleton pattern.
 		EasyGlobalInputManager inputManager = new EasyGlobalInputManager();
 		
+		// Test the forced input:
+		int i = (int)EasyUtilities.ForceInputOfType<int>("Enter int: ", "Must be an int!");
+		float fl = (float)EasyUtilities.ForceInputOfType<float>("Enter float: ", "Must be an float!");
+		double db = (double)EasyUtilities.ForceInputOfType<double>("Enter double: ", "Must be an double!");
+		
+		Console.WriteLine(i);
+		Console.WriteLine(fl);
+		Console.WriteLine(db);
+		Console.WriteLine(db + fl);
+		Console.WriteLine(db + fl + i);
+		Console.ReadKey();
+		
 		// As the system stands today we need an instance of each menu.
 		// You can pre create them in a master class, or create them on the fly.
 		// Either way they need to be instantiated before they are called.
