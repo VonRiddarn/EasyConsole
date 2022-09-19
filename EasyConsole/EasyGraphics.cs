@@ -26,19 +26,17 @@ public static class EasyGraphics
 	}
 
 
-	// TODO: Rename this to something like "ColorFlowEndAll"
-	// Makse sure to tell the users not to use this unless needed.
-	// This will clear the color cache and mess up any and all ColorFlows that has not been ended.
-	///<summary>This method is currently experimental. It should not be used</summary>
-	public static void ResetColorCache()
+	///<summary>Clears all the active colorflows at the same time.</summary>
+	public static void ColorFlowEndAll()
 	{
 		ConsoleColor c = DefaultColor;
 		cachedColors = new List<ConsoleColor>() { DefaultColor };
+		currentColorCacheIndex = 0;
 	}
 	#endregion
 
 	#region COLORFLOW - ColorFlowBegin, ColorFlowEnd
-
+	
 	///<summary>Start a color flow with the specified color.</summary>
 	///<remarks>A color flow will change all console colors to the specified color until stopped by the ColorFlowEnd method.<br/>
 	///Infinite color flows can be nested, but they must all have an individual ColorFlowEnd call. 
@@ -54,9 +52,10 @@ public static class EasyGraphics
 	///<summary>End the last started color flow.</summary>
 	public static void ColorFlowEnd()
 	{
-		//TODO: Add a failsafe so that if the color cahce is cleared we wont actually do anything here (other than sending a warning)
-		// If cache looks good: Do the thing
-		// Else ColoredMessage("Color cache is empty, there is no flow to end.", ConsoleColor.Yellow);
+		// Failsafe so that if we have cleared colorcache we don't try to end flow.
+		if (cachedColors.Count == 1)
+			return;
+
 		currentColorCacheIndex--;
 		Console.ForegroundColor = cachedColors[currentColorCacheIndex];
 
@@ -108,21 +107,19 @@ public static class EasyGraphics
 		DrawLine(lineColor);
 	}
 
-	// TODO: Make a method for editing headers (?) maybe.
-
 	#endregion
 
 	#region LINE - Draw, Set, Reset
-	
+
 	///<summary>Draw a line using the current color of the console</summary>
 	public static void DrawLine() => DrawLine(CurrentColor);
 	///<summary>Draw a line with the specified color</summary>
 	public static void DrawLine(ConsoleColor color)
 	{
 		ColorFlowBegin(color);
-		
+
 		Console.WriteLine(currentLine);
-		
+
 		ColorFlowEnd();
 	}
 

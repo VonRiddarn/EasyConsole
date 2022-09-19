@@ -143,10 +143,6 @@ public abstract class EasyMenu
 
 	#region Public setters
 
-
-	// TODO: change this so that we are using a string array instead for suffix and prefix. -> This is being worked on.
-	// Both must be set when the method is called, but string.empty is a valid input.
-
 	///<summary>Sets the cursor for this menu instance.</summary>
 	public void SetSelectionCursor(string selectionCursorPrefix, string selectionCursorSuffix)
 	{

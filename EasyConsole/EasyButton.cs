@@ -10,13 +10,7 @@ public class EasyButton
 
 	string text = "";
 	public string Text { get { return text; } }
-
-	// TODO: Add a parameter for overriding the color of unselected buttons.
-	// This lamda might work, IDK haven't tested it lol...
-	//public Button(string ID, string text) => new Button(ID, text, EasyGraphics.CurrentColor); 
-	// The thought is that the button requires a color always, but we add it behind the scenes
-	// Like we have done for many other overloads.
-	// Alternative: Have 2 Constructors. One of them sets the overrideColor, one does not.
+	
 	public EasyButton(string ID, string text)
 	{
 		// overrideColor = EasyGraphics.CurrentColor;

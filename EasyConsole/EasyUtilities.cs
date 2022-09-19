@@ -5,7 +5,7 @@ namespace VonRiddarn.EasyConsole.Utilities;
 
 public static class EasyUtilities
 {
-	// TODO: Add color override here
+	
 	public static void WaitForKey(string message = "Press any key to continue.", ConsoleKey key = ConsoleKey.NoName, bool useWriteLine = true)
 	{
 		if (message.Length > 0)
@@ -39,14 +39,15 @@ public static class EasyUtilities
 		// Build a string of spaces with the length Console.WindowWidth
 		// Reset the cursor to the left
 		Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-		
+
 		// If true: Send the cursor back to its start position after clearing.
 		if (rubberBand)
 			Console.CursorTop -= heightOffset;
 	}
 
-	// TODO: Add ClearLine that clears the lines from a start to end.
 
+	// TODO: Add ClearLine that clears the lines from a start to end.
+	// Tried this. My small walnut brain couldn't handle it, so thats a future feature.
 
 	///<summary>This will lock the end-user in an input loop that they cannot escape unless they give a valid input of type T</summary>
 	///<remarks>The value is then returned as an object, meaning you need to case the return to the type you want it to be.
@@ -61,19 +62,16 @@ public static class EasyUtilities
 
 		while (true)
 		{
-			
-			if (prompt.Length > 0)
-				Console.Write(prompt);
 
-			EasyGraphics.ColorFlowBegin(inputColor);
-			string? input = Console.ReadLine();
-			EasyGraphics.ColorFlowEnd();
+			Console.Write(prompt);
+
+			string? input = EasyGraphics.ColoredInput(inputColor);
 
 			try
 			{
 				// ! at the end is a compiler null forgiveable operator
 				T returnValue = (T)Convert.ChangeType(input, typeof(T))!;
-				
+
 				if (containsErrorMessage)
 					EasyUtilities.ClearLine();
 
