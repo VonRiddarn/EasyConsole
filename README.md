@@ -23,7 +23,6 @@ This is the most recent screenshot: https://i.imgur.com/tEJWfaI.png<br/>
 Note: These screenshots are old and do not fully represent the state of the library.
 For the best understanding look through the source.
 The source is sadly uncommented as of now, but that will be fixed later this week.<br/>
-Promise made (2022 - 09 - 14).
 
 ## >How To use_
 
