@@ -23,15 +23,8 @@ internal class Program
 		// This is absolutely unnecessary. I was just checking the limits of the method.
 		string s = EasyUtilities.ForceInputOfType<string>("Enter string: ", "Must be an string!");
 
-		Console.WriteLine(i);
-		Console.WriteLine(fl);
-		Console.WriteLine(db);
-		Console.WriteLine(db + fl);
-		Console.WriteLine(db + fl + i);
-		Console.WriteLine(ch);
-		Console.WriteLine((int)ch);
-		Console.WriteLine(s);
-		Console.ReadKey();
+		Console.WriteLine($"Int: {i}\nFloat: {fl}\nDouble: {db}\nChar: {ch} ({(int)ch})\nString: {s}");
+		EasyUtilities.WaitForKey();
 
 		// As the system stands today we need an instance of each menu.
 		// You can pre create them in a master class, or create them on the fly.
@@ -44,7 +37,6 @@ internal class Program
 		mainMenu.Start();
 
 		// We continue here when the menu has called ExitMenu
-
 		EasyGraphics.ColoredMessage("So long, and thanks for all the fish!", ConsoleColor.Green);
 	}
 }

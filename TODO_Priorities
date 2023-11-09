@@ -1,6 +1,6 @@
 1: Update EasyMenu cursor settings to use a string array of 2 elements for prefix and suffix.
 
-2: Update EasyMenu Start method to continuesly make an initialize call at the top of the lifespan loop.
+2: Update EasyMenu Start method to continuously make an initialize call at the top of the lifespan loop.
 This means that do not need to implicitly pass parent instances for any menus called within another menus lifespan loop.
 We also need to make modifications to the InitializeNewMenu method in that case so we wont set sevral values each update.
 A simple "currentMenu" and if statement should work wonders.
@@ -14,8 +14,6 @@ no need for an else statement.
 -> This makes us able to look for sequences of button presses and much more.
 -> It's not necessarily needed, but it adds a bit of extra control for the users of the library
 
-4: Fix the unholy godawful mess that is the ForcedInput.
-Instinctively I want to use some kind of generic method and have a middle man method check what to parse or something.
-Not sure how that would work in practice yet though.
-Anyhow, the way it is setup today is terrible and I want it fixed.
-Priority #4 because even though it looks bad, it works.
+4: Reduce callstacking, especially when using colorflow.
+
+5: Refactor the colorflow mechanics.
